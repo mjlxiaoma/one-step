@@ -22,6 +22,10 @@ export const getNewLine = (params: Line) => {
     return axios.post<Line>('/appapi/updateByCon', params);
 };
 
+export const list = (params: any) => {
+    return axios.post<Line>('https://www.fastmock.site/mock/4badde3438edad7471442ef6b4f5dad2/pageList/api/page/pageList', params);
+};
+
 namespace Login {
     // 用户登录表单
     export interface LoginReqForm {

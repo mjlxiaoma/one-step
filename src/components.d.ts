@@ -20,8 +20,10 @@ declare module '@vue/runtime-core' {
     ReSeamlessScroll: typeof import('./components/ReSeamlessScroll/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SelestTable: typeof import('./components/selestTable/index.vue')['default']
     Settings: typeof import('./components/layout/settings.vue')['default']
     Tags: typeof import('./components/layout/tags.vue')['default']
+    TAntdSelectTable: typeof import('./components/TAntdSelectTable/index.vue')['default']
     TypeTest: typeof import('./components/TypeTest.vue')['default']
     Typewriter: typeof import('./components/typewriter/index.vue')['default']
   }

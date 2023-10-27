@@ -71,6 +71,39 @@ const routes: Array<RouteRecordRaw> = [
                     icon: 'icontable',
                 },
             },
+            {
+                path: '/tables',
+                name: 'tables',
+                component: () => import('../views/tables/index.vue'),
+                meta: {
+                    title: '表格嵌套',
+                    hidden: false,
+                    toOne: false,
+                    icon: 'icontable',
+                },
+            },
+            {
+                path: '/test',
+                name: 'test',
+                component: () => import('../views/test/index.vue'),
+                meta: {
+                    title: 'test',
+                    hidden: false,
+                    toOne: false,
+                    icon: 'icontable',
+                },
+            },
+            {
+                path: '/upload',
+                name: 'upload',
+                component: () => import('../views/upload/upload.vue'),
+                meta: {
+                    title: '上传',
+                    hidden: false,
+                    toOne: false,
+                    icon: 'icontable',
+                },
+            },
         ],
     },
     {

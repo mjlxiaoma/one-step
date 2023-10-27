@@ -3,7 +3,7 @@
 import { ref } from 'vue';
 import { message } from 'ant-design-vue';
 
-import  './index.css';
+import './index.css';
 
 // const renderDom = () => {
 //   return (
@@ -75,7 +75,7 @@ export default defineComponent({
                     return <div key="v">No.{v}</div>;
                 })}
                 <div data-arr={arr}>1</div>
-                <button  onClick={handleClick}>点击事件</button>
+                <button onClick={handleClick}>点击事件</button>
                 <br />
                 <button onClick={myClick}>点我触发emit</button>
             </>
