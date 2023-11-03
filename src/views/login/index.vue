@@ -13,7 +13,7 @@
                 </div>
             </Motion>
             <Motion :delay="300" class="summary">
-                <typewriter :text="'Vue3 + Vite3 + Typescript + Pinia + Ant-design'" />
+                <!-- <typewriter :text="'Vue3 + Vite3 + Typescript + Pinia + Ant-design'" /> -->
             </Motion>
         </div>
         <div class="login-right">

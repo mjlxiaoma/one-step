@@ -20,11 +20,17 @@
       20人份/盒20人份/盒20人份/盒20 20人份/盒20人份/盒20人份/盒20
     </p>
   </div>
+  
+  <a-button @click="handleClick" type="primary"> 修改 </a-button>
+  <button class="color">nihaoa</button>
+  <input type="">
 </template> 
-<script lang="ts">
+<script lang="ts" setup>
 import { InboxOutlined } from '@ant-design/icons-vue';
 import { message } from 'ant-design-vue';
 import { defineComponent, ref } from 'vue';
+// import 'vue-cropper/dist/index.css'
+// import { VueCropper } from 'vue-cropper'
 if (navigator.clipboard) {
   navigator.clipboard.readText()
     .then(text => console.log(text, 'text'))
@@ -45,35 +51,61 @@ interface FileInfo {
   fileList: FileItem[];
 }
 
-export default defineComponent({
-  components: {
-    InboxOutlined,
-  },
-  setup() {
-    const handleChange = (info: FileInfo) => {
-      console.log(info, 'info');
+// export default defineComponent({
+//   components: {
+//     InboxOutlined,
+//   },
+//   setup() {
+let t_color = ref('#f60')
+let b_color = ref('#000')
+const isEdit = ref(false)
+const handleClick = () => {
+  isEdit.value = !isEdit.value
+  if (isEdit.value) {
+    t_color.value = 'red'
+    b_color.value = '#eee'
+  }else{
+    t_color.value = '#f60'
+    b_color.value = '#000'
+  }
 
-      const status = info.file.status;
-      if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    };
-    return {
-      handleChange,
-      fileList: ref([]),
-    };
-  },
-});
+  console.log('点击了', t_color, b_color);
+}
+const handleChange = (info: FileInfo) => {
+  console.log(info, 'info');
+
+  const status = info.file.status;
+  if (status !== 'uploading') {
+    console.log(info.file, info.fileList);
+  }
+  if (status === 'done') {
+    message.success(`${info.file.name} file uploaded successfully.`);
+  } else if (status === 'error') {
+    message.error(`${info.file.name} file upload failed.`);
+  }
+};
+//     return {
+//       handleChange,
+//       fileList: ref([]),
+//       handleClick,
+//       t_color,
+//       b_color
+//     };
+//   },
+// });
 </script>
 <style lang="scss" scoped>
 .upload {
   width: 100px;
   height: 100px;
+}
+
+.color {
+
+  --textColor: v-bind(t_color);
+  --bgColor: v-bind(b_color);
+  color: var(--textColor);
+  background-color: var(--bgColor);
 }
 
 /* 设置容器的样式 */

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
+    "@ant-design/icons-vue": "^7.0.1",
     "@vueuse/core": "^10.1.2",
     "@vueuse/motion": "^2.0.0-beta.12",
     "ant-design-vue": "^3.2.13",
@@ -32,6 +33,7 @@
     "unplugin-auto-import": "^0.16.6",
     "vite-plugin-svg-icons": "^2.0.1",
     "vue": "^3.2.37",
+    "vue-cropper": "^0.6.4",
     "vue-router": "^4.1.6",
     "xlsx": "^0.18.5"
   },
