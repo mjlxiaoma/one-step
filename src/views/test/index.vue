@@ -1,11 +1,11 @@
 
 <template>
-  <t-antd-select-table ref="tantdselecttable" selectWidth="40%" v-model="state.selectVal" :table="state.table"
+  <m-antd-select-table ref="tantdselecttable" selectWidth="40%" v-model="state.selectVal" :table="state.table"
     :columns="state.table.columns" :scroll="{ x: 1000, y: 400 }" :keywords="{ label: 'name', value: 'code' }"
-    @checked-change="checkedChange" placeholder="单选"></t-antd-select-table>
+    @checked-change="checkedChange" placeholder="单选"></m-antd-select-table>
 </template>
 <script setup lang="ts">
-import TAntdSelectTable from "@/components/TAntdSelectTable/index.vue";
+import MAntdSelectTable from "@/components/MAntdSelectTable/index.vue";
 import { reactive, ref } from "vue";
 const tantdselecttable: any = ref<HTMLElement | null>(null);
 const state: any = reactive({

@@ -29,7 +29,7 @@
 
 "@ant-design/icons-vue@^6.1.0":
   version "6.1.0"
-  resolved "https://registry.npmjs.org/@ant-design/icons-vue/-/icons-vue-6.1.0.tgz"
+  resolved "https://registry.npmmirror.com/@ant-design/icons-vue/-/icons-vue-6.1.0.tgz"
   integrity sha512-EX6bYm56V+ZrKN7+3MT/ubDkvJ5rK/O2t380WFRflDcVFgsvl3NLH7Wxeau6R8DbrO5jWR6DSTC3B6gYFp77AA==
   dependencies:
     "@ant-design/colors" "^6.0.0"
@@ -882,6 +882,11 @@
   dependencies:
     vue-demi ">=0.14.0"
 
+"@xmldom/xmldom@^0.8.6":
+  version "0.8.10"
+  resolved "https://registry.npmmirror.com/@xmldom/xmldom/-/xmldom-0.8.10.tgz"
+  integrity sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==
+
 acorn-jsx@^5.3.2:
   version "5.3.2"
   resolved "https://registry.npmjs.org/acorn-jsx/-/acorn-jsx-5.3.2.tgz"
@@ -1322,6 +1327,13 @@ cors@^2.8.5:
   dependencies:
     object-assign "^4"
     vary "^1"
+
+cos-js-sdk-v5@^1.4.21:
+  version "1.4.21"
+  resolved "https://registry.npmmirror.com/cos-js-sdk-v5/-/cos-js-sdk-v5-1.4.21.tgz"
+  integrity sha512-6cR53IZF2o17uaPr8XJSMa+Q73P9pgDFD5IYGcIfJn06JJaK6hGX43nv5DJ17uQYmwQBIqNeZOF97I7ClrsNdA==
+  dependencies:
+    "@xmldom/xmldom" "^0.8.6"
 
 crc-32@~1.2.0, crc-32@~1.2.1:
   version "1.2.2"

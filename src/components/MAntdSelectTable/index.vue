@@ -1,19 +1,42 @@
 <template>
-  <a-select ref="selectRef" v-model:value="childSelectedValue" class="t-antd-select-table"
-    dropdownClassName="t_antd_select_dropdown"
-    :style="`width:${typeof selectWidth === 'number' ? `${selectWidth}px` : `${selectWidth}`}`" :mode="mode" :open="open"
-    v-bind="selectAttr" :value-key="keywords.value" :filterOption="false" @search="filterMethodHandle"
-    @dropdown-visible-change="visibleChange" @deselect="removeTag" @clear="clear" @input-key-down="selectKeyup">
+  <a-select
+    ref="selectRef"
+    v-model:value="childSelectedValue"
+    class="t-antd-select-table"
+    dropdownClassName="m_antd_select_dropdown"
+    :style="`width:${typeof selectWidth === 'number' ? `${selectWidth}px` : `${selectWidth}`}`"
+    :mode="mode"
+    :open="open"
+    v-bind="selectAttr"
+    :value-key="keywords.value"
+    :filterOption="false"
+    @search="filterMethodHandle"
+    @dropdown-visible-change="visibleChange"
+    @deselect="removeTag"
+    @clear="clear"
+    @input-key-down="selectKeyup"
+  >
     <template #notFoundContent>
-      <div class="t-table-select__table" :style="{ width: `${tableWidth}px` }">
-        <a-table ref="selectTable" :data-source="state.tableData" :columns="columns" bordered :row-key="getRowKey"
-           :pagination="isShowPagination && table.pagination" :row-selection="rowSelection || {
+      <div class="m-table-select__table" :style="{ width: `${tableWidth}px` }">
+        <a-table
+          ref="selectTable"
+          :data-source="state.tableData"
+          :columns="columns"
+          bordered
+          :row-key="getRowKey"
+          :row-class-name="getRowClass"
+          :pagination="isShowPagination && table.pagination"
+          :row-selection="
+            rowSelection || {
               selectedRowKeys: state.selectedRowKeys,
               onChange: onSelectChange,
               onSelectNone: onSelectNone,
               type: mode === 'multiple' ? 'checkbox' : 'radio'
             }
-            " :customRow="rowClick" v-bind="$attrs">
+          "
+          :customRow="rowClick"
+          v-bind="$attrs"
+        >
           <template #[item]="scope" v-for="item in renderArr">
             <slot :name="item" :scope="scope" v-bind="scope || {}"></slot>
           </template>
@@ -194,18 +217,17 @@ const rowClick = (record: { [x: string]: any }) => {
         keys.push(record[props.keywords.value]);
         items.push(record);
         onSelectChange(keys, items);
-      } 
-      // else {
-      //   // 多选
-      //   const indexRow = state.selectedRowKeys.indexOf(record[props.keywords.value]);
-      //   indexRow === -1 ? state.selectedRowKeys.push(record[props.keywords.value]) : state.selectedRowKeys.splice(indexRow, 1);
-      //   if (indexRow === -1) {
-      //     state.selectedRows.push(record);
-      //   } else {
-      //     state.selectedRows.splice(indexRow, 1);
-      //   }
-      //   onSelectChange(state.selectedRowKeys, state.selectedRows);
-      // }
+      } else {
+        // 多选
+        const indexRow = state.selectedRowKeys.indexOf(record[props.keywords.value]);
+        indexRow === -1 ? state.selectedRowKeys.push(record[props.keywords.value]) : state.selectedRowKeys.splice(indexRow, 1);
+        if (indexRow === -1) {
+          state.selectedRows.push(record);
+        } else {
+          state.selectedRows.splice(indexRow, 1);
+        }
+        onSelectChange(state.selectedRowKeys, state.selectedRows);
+      }
     }
   };
 };
@@ -395,21 +417,19 @@ defineExpose({ focus, blur, openSelectDropdown, state });
 </script>
 
 <style lang="scss">
-.t_antd_select_dropdown {
-  .t-table-select__table {
+.m_antd_select_dropdown {
+  .m-table-select__table {
     padding: 10px;
 
     .ant-table-body,
     .ant-table-header {
       margin: 0;
     }
-
     .ant-table-body {
       .ant-table-tbody {
         .ant-table-row {
           cursor: pointer;
         }
-
         .ant-table-row-selected,
         .active-selected-row {
           color: #409eff;
@@ -418,7 +438,6 @@ defineExpose({ focus, blur, openSelectDropdown, state });
       }
     }
   }
-
   .ant-pagination {
     flex-wrap: nowrap;
   }

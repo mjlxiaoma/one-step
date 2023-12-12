@@ -14,6 +14,7 @@ declare module '@vue/runtime-core' {
     Layout: typeof import('./components/layout/index.vue')['default']
     Loading: typeof import('./components/Loading/index.vue')['default']
     Lottie: typeof import('./components/lottie/index.vue')['default']
+    MAntdSelectTable: typeof import('./components/MAntdSelectTable/index.vue')['default']
     NotFound: typeof import('./components/NotFound.vue')['default']
     Parent: typeof import('./components/parent.vue')['default']
     PicCode: typeof import('./components/PicCode/index.vue')['default']
