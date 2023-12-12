@@ -30,10 +30,10 @@
 
 # 🏃如何运行
 
-1. `git clone git@github.com:tsinghua-lau/one-step.git`
+1. `git clone https://github.com/m2075498242/one-step.git`
 2. yarn install
 3. yarn run dev
-3. 本地访问 http://127.0.0.1:8088  在线访问 https://one-step-ten.vercel.app/
+3. 本地访问 http://127.0.0.1:8088 
 
 # 🛂代码检查
 

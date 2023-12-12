@@ -48,7 +48,7 @@
 </template>
 <script lang="ts">
 export default {
-  name: "TAntdSelectTable"
+  name: "MAntdSelectTable"
 };
 </script>
 <script setup lang="ts">
