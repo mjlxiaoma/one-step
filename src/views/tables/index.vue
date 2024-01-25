@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--  :scroll="billScroll" -->
-    <a-table :columns="columns" :data-source="data" :pagination="false" :row-selection="parentRowSelection"
+    <a-table :checkStrictly="true" :columns="columns" :data-source="data" :pagination="false" :row-selection="parentRowSelection"
       class="components-table-demo-nested">
       <template #expandedRowRender="{ record }">
         <a-table :columns="innerColumns" :data-source="record.child" :scroll="{ x: 'max-content' }"
@@ -244,6 +244,7 @@ checkboxDomList.value = [document.querySelectorAll('td')]
 const childSelectedRowKeys = ref<any>([]) //选中的key
 const childRowSelection = {
   fixed: true,
+  checkStrictly:true,
   hideSelectAll: true,
   selectedRowKeys: childSelectedRowKeys,
   onSelect: (record, selected, selectedRows) => {
@@ -306,6 +307,7 @@ const childRowSelection = {
 const parentSelectedRowKeys = ref<any>([])
 const parentRowSelection = {
   fixed: true,
+  checkStrictly:true,
   selectedRowKeys: parentSelectedRowKeys,
   onChange: (selectedRowKeys: string[], selectedRows: DataType[]) => {
     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);

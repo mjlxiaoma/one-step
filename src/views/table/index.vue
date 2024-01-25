@@ -1,99 +1,121 @@
 <template>
-	<div>
-		<div style="margin-bottom: 16px">
-			<a-button type="primary" :disabled="!hasSelected" :loading="loading" @click="start"> Reload </a-button>
-			<span style="margin-left: 8px">
-				<template v-if="hasSelected">
-					{{ `Selected ${selectedRowKeys.length} items` }}
-				</template>
-			</span>
-		</div>
-		<a-table :rowClassName="(record, index) => (index % 2 === 1 ? 'newRowStyle' : ``)"
-			:row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" :columns="columns"
-			:data-source="data" />
-	</div>
+  <a-table :columns="columns" :data-source="data" @resizeColumn="handleResizeColumn">
+    <template #headerCell="{ column }">
+      <template v-if="column.key === 'name'">
+        <span>
+          <smile-outlined />
+          Name
+        </span>
+      </template>
+    </template>
+
+    <template #bodyCell="{ column, record }">
+      <template v-if="column.key === 'name'">
+        <a>
+          {{ record.name }}
+        </a>
+      </template>
+      <template v-else-if="column.key === 'tags'">
+        <span>
+          <a-tag v-for="tag in record.tags" :key="tag"
+            :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'">
+            {{ tag.toUpperCase() }}
+          </a-tag>
+        </span>
+      </template>
+      <template v-else-if="column.key === 'action'">
+        <span>
+          <a>Invite 一 {{ record.name }}</a>
+          <a-divider type="vertical" />
+          <a>Delete</a>
+          <a-divider type="vertical" />
+          <a class="ant-dropdown-link">
+            More actions
+            <down-outlined />
+          </a>
+        </span>
+      </template>
+    </template>
+  </a-table>
 </template>
 <script lang="ts">
+import { SmileOutlined, DownOutlined } from '@ant-design/icons-vue';
+import type { TableColumnsType } from 'ant-design-vue';
+import { defineComponent, ref } from 'vue';
 
-import { computed, defineComponent, reactive, toRefs } from 'vue';
-// 新样式函数
-const newStyle = (record, index): string => {
-	console.log(record, index);
-
-	return 'newRowStyle' // 返回到行样式
-}
-interface DataType {
-	key: string | number;
-	name: string;
-	age: number;
-	address: string;
-}
-
-const columns = [
-	{
-		title: 'Name',
-		dataIndex: 'name',
-	},
-	{
-		title: 'Age',
-		dataIndex: 'age',
-	},
-	{
-		title: 'Address',
-		dataIndex: 'address',
-	},
+const data = [
+  {
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park',
+    tags: ['nice', 'developer'],
+  },
+  {
+    key: '2',
+    name: 'Jim Green',
+    age: 42,
+    address: 'London No. 1 Lake Park',
+    tags: ['loser'],
+  },
+  {
+    key: '3',
+    name: 'Joe Black',
+    age: 32,
+    address: 'Sidney No. 1 Lake Park',
+    tags: ['cool', 'teacher'],
+  },
 ];
 
-const data: DataType[] = [];
-for (let i = 0; i < 46; i++) {
-	data.push({
-		key: i,
-		name: `Edward King ${i}`,
-		age: 32,
-		address: `London, Park Lane no. ${i}`,
-	});
-}
-
 export default defineComponent({
-	setup() {
-		const state = reactive<{
-			selectedRowKeys: Array<string | number>;
-			loading: boolean;
-		}>({
-			selectedRowKeys: [], // Check here to configure the default column
-			loading: false,
-		});
-		const hasSelected = computed(() => state.selectedRowKeys.length > 0);
-
-		const start = () => {
-			state.loading = true;
-			// ajax request after empty completing
-			setTimeout(() => {
-				state.loading = false;
-				state.selectedRowKeys = [];
-			}, 1000);
-		};
-		const onSelectChange = (selectedRowKeys: Array<string | number>) => {
-			console.log('selectedRowKeys changed: ', selectedRowKeys);
-			state.selectedRowKeys = selectedRowKeys;
-		};
-
-		return {
-			data,
-			columns,
-			hasSelected,
-			...toRefs(state),
-
-			// func
-			start,
-			onSelectChange,
-			newStyle,
-		};
-	},
+  components: {
+    SmileOutlined,
+    DownOutlined,
+  },
+  setup() {
+    const columns = ref<TableColumnsType>([
+      {
+        dataIndex: 'name',
+        key: 'name',
+        resizable: true,
+        width: 150,
+      },
+      {
+        title: 'Age',
+        dataIndex: 'age',
+        key: 'age',
+        resizable: true,
+        width: 100,
+      },
+      {
+        title: 'Address',
+        dataIndex: 'address',
+        key: 'address',
+        resizable: true,
+        width: 150,
+      },
+      {
+        title: 'Tags',
+        key: 'tags',
+        dataIndex: 'tags',
+        resizable: true,
+        width: 150,
+      },
+      {
+        title: 'Action',
+        key: 'action',
+        resizable: true,
+        width: 150,
+      },
+    ]);
+    return {
+      data,
+      columns,
+      handleResizeColumn: (w, col) => {
+        console.log(w, col);
+        col.width = w;
+      },
+    };
+  },
 });
 </script>
-<style scoped lang="scss">
-::v-deep .newRowStyle {
-	background-color: orange;
-}
-</style>

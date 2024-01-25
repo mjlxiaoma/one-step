@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #draggable {
+      width: 100px;
+      height: 100px;
+      background-color: #3498db;
+      color: #fff;
+      text-align: center;
+      line-height: 100px;
+      position: absolute;
+      cursor: move;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <div id="draggable" draggable="true">Drag me!</div> -->
+  <script>
+    // document.addEventListener('DOMContentLoaded', function () {
+    //   const draggableElement = document.getElementById('draggable');
+
+    //   let offsetX, offsetY, isDragging = false;
+
+    //   // 开始拖拽
+    //   draggableElement.addEventListener('dragstart', function (e) {
+    //     console.log(e,'开始拖拽');
+    //     offsetX = e.clientX - draggableElement.getBoundingClientRect().left;
+    //     offsetY = e.clientY - draggableElement.getBoundingClientRect().top;
+
+    //     isDragging = true;
+    //     draggableElement.style.opacity = '0.5';
+    //   });
+
+    //   // 拖拽中
+    //   document.addEventListener('mousemove', function (e) {
+    //     if (!isDragging) return;
+    //     console.log(e,'拖拽中');
+    //     const x = e.clientX - offsetX;
+    //     const y = e.clientY - offsetY;
+
+    //     draggableElement.style.left = x + 'px';
+    //     draggableElement.style.top = y + 'px';
+    //   });
+
+    //   // 结束拖拽
+    //   document.addEventListener('mouseup', function () {
+    //     console.log('结束拖拽');
+    //     if (isDragging) {
+    //       isDragging = false;
+    //       draggableElement.style.opacity = '1';
+    //     }
+    //   });
+    // });
+  </script>
+</body>
+
+</html>
