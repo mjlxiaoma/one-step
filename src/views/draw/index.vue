@@ -1,0 +1,90 @@
+<template>
+  <div class="container">
+    <div v-for="(item, index) in DrawList" :key="index" class="prize-item" :class="currentIndex === index ? 'active' : ''"
+      @click="() => draw(index)">
+      <img :src="item.url" alt="" />
+      <p class="desc">{{ item.desc }}</p>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+interface Prize {
+  url: string
+  desc: string
+}
+const pirzeList: Prize[] = [
+  { url: 'redEnvelope', desc: '现金红包' },
+  { url: 'topPrize', desc: '一等奖' },
+  { url: 'thirdPrize', desc: '三等奖' },
+  { url: 'none', desc: '谢谢参与' },
+  { url: 'secondPrize', desc: '二等奖' },
+  { url: 'redEnvelope', desc: '现金红包' },
+  { url: 'none', desc: '谢谢参与' },
+  { url: 'fourthPrize', desc: '四等奖' }
+]
+const btnStart = { url: '', desc: '开始抽奖' }
+const DrawList = computed(() => {
+  return [...pirzeList.slice(0, 4), btnStart, ...pirzeList.slice(4)]
+})
+const drawOrder = [0, 1, 2, 5, 8, 7, 6, 3] // 抽奖顺序
+let count = 0 // 抽奖次数
+let isDrawing = false // 是否正在抽奖
+const currentIndex = ref<number | null>(null) // 当前选中的奖品
+const circle = 32 // 一圈8个奖品，至少转4圈
+
+const draw = (index: number) => {
+  if (index === 4) {
+    // 开始抽奖
+    if (isDrawing) {
+      return
+    }
+    isDrawing = true
+    const position = 6 // 假设后台返回的中奖位置是5
+    const timer = setInterval(() => {
+      currentIndex.value = drawOrder[count % drawOrder.length]
+      count++
+      if (count > circle && currentIndex.value === drawOrder[position - 1]) {
+        // 抽奖结束
+        clearInterval(timer)
+        // 停顿一会显示中奖
+        setTimeout(() => {
+          alert('恭喜你中奖了')
+          isDrawing = false;
+          count = 0
+          currentIndex.value = null
+        }, 500)
+      }
+    }, 50)
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.container {
+  width: 528px;
+  height: 528px;
+  // background-color: #f60;
+  // background: url('../assets/bg.png') no-repeat;
+  padding: 55px 55px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
+
+  .prize-item {
+    width: 130px;
+    height: 130px;
+    text-align: center;
+
+    img {
+      margin-top: 10px;
+    }
+  }
+
+  .active {
+    background-color: rgb(214, 83, 83);
+  }
+}
+</style>

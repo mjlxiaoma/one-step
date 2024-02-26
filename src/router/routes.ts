@@ -94,6 +94,17 @@ const routes: Array<RouteRecordRaw> = [
                 },
             },
             {
+                path: '/draw',
+                name: 'draw',
+                component: () => import('../views/draw/index.vue'),
+                meta: {
+                    title: 'draw',
+                    hidden: false,
+                    toOne: false,
+                    icon: 'icontable',
+                },
+            },
+            {
                 path: '/upload',
                 name: 'upload',
                 component: () => import('../views/upload/upload.vue'),

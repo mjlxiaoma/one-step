@@ -3,10 +3,38 @@
   <m-antd-select-table ref="tantdselecttable" selectWidth="40%" v-model="state.selectVal" :table="state.table"
     :columns="state.table.columns" :scroll="{ x: 1000, y: 400 }" :keywords="{ label: 'name', value: 'code' }"
     @checked-change="checkedChange" placeholder="单选"></m-antd-select-table>
+  <br>
+  <a-input v-model:value="inp" @input="handleInput" style="width: 200px;" />
+  <!-- <a-input-number style="width: 100%" v-model:value="inp"
+    :formatter="(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+    :parser="(value) => `${value}`.replace(/\$\s?|(,*)/g, '')">
+  </a-input-number> -->
+  输入框值{{ inp }}
+  <div class="box" style="width: 200px;height: 200px;background-color: #f60;opacity: 1;">父盒子
+    <div class="child" style="width: 100px;height: 100px;background-color: skyblue;opacity: 0.3;">子盒子</div>
+  </div>
 </template>
 <script setup lang="ts">
 import MAntdSelectTable from "@/components/MAntdSelectTable/index.vue";
-import { reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
+const handleInput = (event) => {
+  const inputRegex = /^[0-9]*(\.[0-9]+)?$/;
+  const inputValue = inp.value;
+
+  if (!inputRegex.test(inputValue)) {
+    // 输入不符合规则，可以进行相应的处理，例如清空输入框
+    // 或者给用户提示信息
+    console.log('请输入整数或小数');
+    inp.value = ''; // 清空输入框
+  } else {
+    // 输入符合规则，进行其他处理
+  }
+};
+const inp = ref()
+console.log('执行了created');
+watch(inp.value, () => {
+  console.log('执行了watch');
+},);
 const tantdselecttable: any = ref<HTMLElement | null>(null);
 const state: any = reactive({
   selectVal: null,

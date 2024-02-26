@@ -6,57 +6,209 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    #draggable {
-      width: 100px;
-      height: 100px;
-      background-color: #3498db;
-      color: #fff;
-      text-align: center;
-      line-height: 100px;
-      position: absolute;
-      cursor: move;
-    }
   </style>
 </head>
 
 <body>
-  <!-- <div id="draggable" draggable="true">Drag me!</div> -->
   <script>
-    // document.addEventListener('DOMContentLoaded', function () {
-    //   const draggableElement = document.getElementById('draggable');
+    // function right(arr, k) {
+    //   if (arr.length === 0) {
+    //     return arr
+    //   }
+    //   const n = arr.length
+    //   k = k % n // 处理k大于数组长度情况
+    // }
 
-    //   let offsetX, offsetY, isDragging = false;
+    // function reverseArray(arr, start, end) {
+    //   while (start < end) {
+    //     const temp = arr[start]
+    //     arr[start] = arr[end]
+    //     arr[end] = temp
+    //     start++
+    //     end--
+    //   }
+    // }
+    // const array = [1, 2, 3, 4, 5]
+    // const k = 2
+    // const rotatedArray = right(array, k)
+    // console.log(rotatedArray); // 输出 [4, 5, 1, 2, 3]
 
-    //   // 开始拖拽
-    //   draggableElement.addEventListener('dragstart', function (e) {
-    //     console.log(e,'开始拖拽');
-    //     offsetX = e.clientX - draggableElement.getBoundingClientRect().left;
-    //     offsetY = e.clientY - draggableElement.getBoundingClientRect().top;
-
-    //     isDragging = true;
-    //     draggableElement.style.opacity = '0.5';
-    //   });
-
-    //   // 拖拽中
-    //   document.addEventListener('mousemove', function (e) {
-    //     if (!isDragging) return;
-    //     console.log(e,'拖拽中');
-    //     const x = e.clientX - offsetX;
-    //     const y = e.clientY - offsetY;
-
-    //     draggableElement.style.left = x + 'px';
-    //     draggableElement.style.top = y + 'px';
-    //   });
-
-    //   // 结束拖拽
-    //   document.addEventListener('mouseup', function () {
-    //     console.log('结束拖拽');
-    //     if (isDragging) {
-    //       isDragging = false;
-    //       draggableElement.style.opacity = '1';
+    //手写Object Create
+    function myCreate(obj) {
+      function F() { }
+      F.prototype = obj
+      return new F()
+    }
+    // 手写深拷贝
+    // function deepClone(obj) {
+    //   if (typeof obj !== "object") return
+    //   let newObj = Array.isArray(obj) ? [] : {}
+    //   for (let key in obj) {
+    //     if (obj.hasOwnProperty(key)) {
+    //       // 如果是对象继续递归调用
+    //       newObj[key] = typeof obj[key] === 'object' ? deepClone(obj[key]) : obj[key]
     //     }
-    //   });
-    // });
+    //   }
+    //   return newObj
+    // }
+    // const obj = {
+    //   name: '孙悟空',
+    //   age: 20,
+    // }
+    // const obj2 = deepClone(obj)
+    // console.log(obj2, 'obj1');
+    // console.log(obj2, 'obj2');
+    // obj.name = '唐僧'
+    // obj2.name = '白骨精'
+    // console.log(obj, 'obj');
+    // console.log(obj2, 'obj2');
+    class MyPromise {
+      constructor(executor) {
+        console.log(executor, 'executor');
+        this.status = 'pending';
+        this.value = undefined;
+        this.reason = undefined;
+        this.onFulfilledCallbacks = [];
+        this.onRejectedCallbacks = [];
+
+        const resolve = (value) => {
+          if (this.status === 'pending') {
+            this.status = 'fulfilled';
+            this.value = value;
+            this.onFulfilledCallbacks.forEach(callback => callback(value));
+          }
+        };
+
+        const reject = (reason) => {
+          if (this.status === 'pending') {
+            this.status = 'rejected';
+            this.reason = reason;
+            this.onRejectedCallbacks.forEach(callback => callback(reason));
+          }
+        };
+
+        try {
+          executor(resolve, reject);
+        } catch (error) {
+          reject(error);
+        }
+      }
+
+      then(onFulfilled, onRejected) {
+        return new MyPromise((resolve, reject) => {
+          if (this.status === 'fulfilled') {
+            setTimeout(() => {
+              try {
+                const result = onFulfilled(this.value);
+                resolve(result);
+              } catch (error) {
+                reject(error);
+              }
+            }, 0);
+          }
+
+          if (this.status === 'rejected') {
+            setTimeout(() => {
+              try {
+                const result = onRejected(this.reason);
+                resolve(result);
+              } catch (error) {
+                reject(error);
+              }
+            }, 0);
+          }
+
+          if (this.status === 'pending') {
+            this.onFulfilledCallbacks.push((value) => {
+              setTimeout(() => {
+                try {
+                  const result = onFulfilled(value);
+                  resolve(result);
+                } catch (error) {
+                  reject(error);
+                }
+              }, 0);
+            });
+
+            this.onRejectedCallbacks.push((reason) => {
+              setTimeout(() => {
+                try {
+                  const result = onRejected(reason);
+                  resolve(result);
+                } catch (error) {
+                  reject(error);
+                }
+              }, 0);
+            });
+          }
+        });
+      }
+
+      catch(onRejected) {
+        return this.then(null, onRejected);
+      }
+    }
+
+    // 示例
+
+    const promise = new MyPromise((resolve, reject) => {
+      // 异步操作，比如 AJAX 请求
+      setTimeout(() => {
+        resolve('Data successfully retrieved!');
+      }, 1000);
+    });
+
+    promise.then((data) => {
+      console.log(data); // 输出 'Data successfully retrieved!'
+    }).catch((error) => {
+      console.error(error);
+    });
+    const p = new Promise((resolve, reject) => {
+      resolve(1231)
+    })
+    p.then((res => {
+      console.log(res, 'res');
+    }))
+
+    //防抖函数
+    function debounce(func, delay) {
+      let timer;
+      return function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          func.apply(this, args);
+        }, delay);
+      };
+    }
+
+    // 示例
+    const debouncedFunction = debounce(() => {
+      console.log("Debounced function is called.");
+    }, 300);
+
+    // 触发函数
+    debouncedFunction();
+    
+    function throttle(func, delay) {
+      let isThrottled = false;
+      return function (...args) {
+        if (!isThrottled) {
+          func.apply(this, args);
+          isThrottled = true;
+          setTimeout(() => {
+            isThrottled = false;
+          }, delay);
+        }
+      };
+    }
+
+    // 示例
+    const throttledFunction = throttle(() => {
+      console.log("Throttled function is called.");
+    }, 300);
+
+    // 触发函数
+    throttledFunction();
   </script>
 </body>
 
