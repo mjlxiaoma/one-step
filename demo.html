@@ -6,39 +6,129 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    #triangle {
+      width: 0;
+      border-top: 100px solid rgba(0, 0, 0, 0);
+      border-bottom: 100px solid rgba(0, 0, 0, 0);
+      border-left: 100px solid green;
+      border-right: 100px solid rgba(0, 0, 0, 0);
+      border-radius: 100px;
+    }
+
+    #triangle1 {
+      width: 0;
+      border-top: 100px solid rgba(0, 0, 0, 0);
+      border-bottom: 100px solid rgba(0, 0, 0, 0);
+      border-left: 100px solid rgba(0, 0, 0, 0);
+      border-right: 100px solid blue;
+    }
+
+    /* 动画 */
+    .polling_message {
+      color: white;
+      float: left;
+      margin-right: 2%;
+    }
+
+    .view_port {
+      background-color: black;
+      height: 25px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .cylon_eye {
+      background-color: red;
+      background-image: linear-gradient(to right,
+          rgba(0, 0, 0, 0.9) 25%,
+          rgba(0, 0, 0, 0.1) 50%,
+          rgba(0, 0, 0, 0.9) 75%);
+      /* color: white; */
+      height: 100%;
+      width: 20%;
+
+      -webkit-animation: 4s linear 0s infinite alternate move_eye;
+      animation: 4s linear 0s infinite alternate move_eye;
+    }
+
+    @-webkit-keyframes move_eye {
+      from {
+        margin-left: -20%;
+      }
+
+      to {
+        margin-left: 100%;
+      }
+    }
+
+    @keyframes move_eye {
+      from {
+        margin-left: -20%;
+      }
+
+      to {
+        margin-left: 100%;
+      }
+    }
   </style>
 </head>
 
 <body>
+  <!-- <div style="display: flex; width: 100%;height: 100%; flex-direction: column; text-align: center;">
+    <div style="height: 50px; background-color: antiquewhite;">top</div>
+    <div style="background-color: aqua; flex: 1;">center</div>
+    <div style="height: 50px; background-color: #f60;">bottom</div>
+  </div> -->
+  <div style="display: flex;">
+    <div class="left" style="border:1px solid #f60">
+      <span>你好啊</span>
+    </div>
+  </div>
+  <div class="view_port">
+    <div class="polling_message">Listening for dispatches</div>
+    <div class="cylon_eye"></div>
+  </div>
+  <a download="xiazai"
+    href="https://vdept3.bdstatic.com/mda-pgpcpwjzkij42dqf/720p/h264/1690189318974159156/mda-pgpcpwjzkij42dqf.mp4?v_from_s=hkapp-haokan-hnb&auth_key=1710393961-0-0-63ca61ea6357c1e7d6c5d96bcbd3baf3&bcevod_channel=searchbox_feed&pd=1&cr=2&cd=0&pt=3&logid=1561285869&vid=15373639849206649643&klogid=1561285869&abtest=">下载</a>
   <script>
-    // function right(arr, k) {
-    //   if (arr.length === 0) {
-    //     return arr
-    //   }
-    //   const n = arr.length
-    //   k = k % n // 处理k大于数组长度情况
+    // 对象创建的方式有哪些
+    // 字面量
+    // 工厂模式
+    // 构造函数模式
+    // 原型模式
+    // 组合使用构造函数模式和原型模式
+    // 动态原型模式
+    // 寄生构造函数模式
+    // 单例模式
+    // const func = () => {
+    //   return new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //       resolve(1)
+    //     }, 1000)
+    //   })
     // }
-
-    // function reverseArray(arr, start, end) {
-    //   while (start < end) {
-    //     const temp = arr[start]
-    //     arr[start] = arr[end]
-    //     arr[end] = temp
-    //     start++
-    //     end--
-    //   }
+    // const fn = async () => {
+    //   const res = await func()
+    //   console.log(res);
     // }
-    // const array = [1, 2, 3, 4, 5]
-    // const k = 2
-    // const rotatedArray = right(array, k)
-    // console.log(rotatedArray); // 输出 [4, 5, 1, 2, 3]
-
+    // fn()
     //手写Object Create
-    function myCreate(obj) {
-      function F() { }
-      F.prototype = obj
-      return new F()
-    }
+    // function myCreate(obj) {
+    //   function F() { }
+    //   F.prototype = obj
+    //   return new F()
+    // }
     // 手写深拷贝
     // function deepClone(obj) {
     //   if (typeof obj !== "object") return
@@ -151,14 +241,14 @@
 
     // 示例
 
-    const promise = new MyPromise((resolve, reject) => {
+    const promise1 = new MyPromise((resolve, reject) => {
       // 异步操作，比如 AJAX 请求
       setTimeout(() => {
-        resolve('Data successfully retrieved!');
+        // resolve('Data successfully retrieved!');
       }, 1000);
     });
 
-    promise.then((data) => {
+    promise1.then((data) => {
       console.log(data); // 输出 'Data successfully retrieved!'
     }).catch((error) => {
       console.error(error);
@@ -183,12 +273,8 @@
 
     // 示例
     const debouncedFunction = debounce(() => {
-      console.log("Debounced function is called.");
+      // console.log("Debounced function is called.");
     }, 300);
-
-    // 触发函数
-    debouncedFunction();
-    
     function throttle(func, delay) {
       let isThrottled = false;
       return function (...args) {
@@ -202,14 +288,67 @@
       };
     }
 
-    // 示例
-    const throttledFunction = throttle(() => {
-      console.log("Throttled function is called.");
-    }, 300);
+    function myInstanceof(left, right) {
+      // 获取对象的原型
+      let proto = Object.getPrototypeOf(left)
+      // 获取构造函数的 prototype 对象
+      let prototype = right.prototype;
 
-    // 触发函数
-    throttledFunction();
+      // 判断构造函数的 prototype 对象是否在对象的原型链上
+      while (true) {
+        if (!proto) return false;
+        if (proto === prototype) return true;
+        // 如果没有找到，就继续从其原型上找，Object.getPrototypeOf方法用来获取指定对象的原型
+        proto = Object.getPrototypeOf(proto);
+      }
+    }
+  </script>
+  <script>
+    // const obj = {}
+    // Object.prototype.fn = function () {
+    // }
+    // console.log(obj);
+    // console.log( obj.fn());
+    // // console.log(Object())
+    // let map = new Map([['a', 2], ['b', 3]])
+    // console.log(map.values(), 'map');
+    // let iS = map.delete('a')
+    // console.log(iS);
+    // console.log(map, 'map');
+    let o = {
+      name: '孙悟空',
+      age: 18,
+      sayName() {
+        console.log(this.name)
+      }
+    }
+    // function Fn(name) {
+    //   this.name = name
+    // }
+    // let fn = new Fn()
+    // console.log(Fn.prototype == fn.__proto__, 'Fn.prototype == fn.__proto__')
+    // console.log(Fn.prototype, 'Fn.prototype == fn.__proto__')
+    // console.log(fn.__proto__, 'Fn.prototype == fn.__proto__')
+    function Parent() {
+      this.name = 'Parent';
+    }
+
+    Parent.prototype.sayHello = function () {
+      console.log('Hello, ' + this.name);
+    };
+
+    function Child() { }
+
+    Child.prototype = new Parent();
+
+    var child = new Child();
+    child.sayHello(); // 输出：Hello, Parent
   </script>
 </body>
+<script>
+  import('./demo.js').then(res => {
+    console.log(res, 'res');
+  })
+</script>
 
 </html>

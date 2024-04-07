@@ -188,6 +188,42 @@ const routes: Array<RouteRecordRaw> = [
             },
         ],
     },
+    {
+        path: '/virtual',
+        name: 'virtual',
+        // redirect: '/virtualList',
+        component: () => import('../components/layout/index.vue'),
+        meta: {
+            title: '虚拟列表',
+            hidden: false,
+            toOne: false,
+            icon: 'icondocument',
+        },
+        children: [
+            {
+                path: '/virtualList',
+                name: 'virtualList',
+                component: () => import('../views/virtually/virtuallyList.vue'),
+                meta: {
+                    title: '列表',
+                    hidden: false,
+                    toOne: false,
+                    icon: 'iconpie-chart_sharp',
+                },
+            },
+            {
+                path: '/virtualTable',
+                name: 'virtualTable',
+                component: () => import('../views/virtually/virtuallyTable.vue'),
+                meta: {
+                    title: '表格',
+                    hidden: false,
+                    toOne: false,
+                    icon: 'iconpie-chart_sharp',
+                },
+            },
+        ],
+    },
 ];
 
 export default routes;

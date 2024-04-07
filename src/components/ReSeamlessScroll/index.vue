@@ -50,7 +50,7 @@ let ease = 'ease-in';
 const { classOption } = props;
 
 if (classOption['key'] === undefined) {
-    classOption['key'] = 0;
+    classOption['key'] = Math.random();
 }
 
 const wrap = templateRef<HTMLElement | null>(`wrap${classOption['key']}`, null);
@@ -68,7 +68,7 @@ const rightSwitchState = computed(() => {
 const defaultOption = computed(() => {
     return {
         //步长
-        step: 1,
+        step: 0.3,
         //启动无缝滚动最小数据数
         limitMoveNum: 5,
         //是否启用鼠标hover控制
@@ -466,7 +466,9 @@ defineExpose({
         <div :style="rightSwitch" v-if="navigation" :class="rightSwitchClass" @click="rightSwitchClick">
             <slot name="right-switch" />
         </div>
-        <div :ref="'realBox' + classOption['key']" :style="pos" @mouseenter="enter" @mouseleave="leave" @touchstart.passive="touchStart" @touchmove.passive="touchMove" @touchend="touchEnd" @mousewheel.passive="wheel">
+        <div :ref="'realBox' + classOption['key']" :style="pos" @mouseenter="enter" @mouseleave="leave"
+            @touchstart.passive="touchStart" @touchmove.passive="touchMove" @touchend="touchEnd"
+            @mousewheel.passive="wheel">
             <div :ref="'slotList' + classOption['key']" :style="float">
                 <slot />
             </div>

@@ -41,10 +41,13 @@ const draw = (index: number) => {
       return
     }
     isDrawing = true
-    const position = 6 // 假设后台返回的中奖位置是5
+    const position = 5 // 假设后台返回的中奖位置是5
     const timer = setInterval(() => {
+      // 当前选中奖品 == 抽奖顺序中的 抽奖次数%抽奖列表长度
       currentIndex.value = drawOrder[count % drawOrder.length]
+      // 每过500毫秒count加1
       count++
+      // 当count加到circle表示转圈完毕 并且当前选中奖品 == 
       if (count > circle && currentIndex.value === drawOrder[position - 1]) {
         // 抽奖结束
         clearInterval(timer)
