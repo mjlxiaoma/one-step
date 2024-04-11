@@ -1,46 +1,92 @@
 <template>
   <div>
-    海报
-    <canvas ref="posterCanvas" width="400" height="600"></canvas>
+    <input type="file" @change="loadImage" accept="image/*">
+    <canvas ref="canvas" width="400" height="300"
+            @mousedown="startCrop"
+            @mousemove="cropping"
+            @mouseup="endCrop"
+            @mouseleave="endCrop"
+            style="cursor: crosshair;"></canvas>
+    <button @click="crop">裁剪</button>
+    <button @click="reset">重置</button>
   </div>
-  <button @click="generatePoster">生成海报</button>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue'
-const posterCanvas = ref()
-const generatePoster = () => {
-  const canvas = posterCanvas.value;
-  const ctx = canvas.getContext('2d');
+<script>
+import { ref } from 'vue';
 
-  // 清空画布
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+export default {
+  setup() {
+    const img = ref(null);
+    const canvas = ref(null);
+    const ctx = ref(null);
+    const startX = ref(0);
+    const startY = ref(0);
+    const endX = ref(0);
+    const endY = ref(0);
+    const isCropping = ref(false);
 
-  // 绘制海报内容
-  ctx.fillStyle = 'white';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const loadImage = (event) => {
+      const file = event.target.files[0];
+      const reader = new FileReader();
 
-  ctx.fillStyle = 'black';
-  ctx.font = '20px Arial';
-  ctx.fillText('这是海报标题', 50, 50);
+      reader.onload = () => {
+        img.value = new Image();
+        img.value.onload = () => {
+          ctx.value = canvas.value.getContext('2d');
+          ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
+          ctx.value.drawImage(img.value, 0, 0);
+        };
+        img.value.src = reader.result;
+      };
 
-  ctx.font = '14px Arial';
-  ctx.fillText('这是一些内容', 50, 80);
+      reader.readAsDataURL(file);
+    };
 
-  // 示例：绘制图片
-  const image = new Image();
-  image.src = 'image.jpg';
-  image.onload = function () {
-    ctx.drawImage(image, 50, 100, 300, 300);
-  };
+    const startCrop = (event) => {
+      if (!img.value) return;
+      isCropping.value = true;
+      startX.value = event.offsetX;
+      startY.value = event.offsetY;
+    };
 
-  // 导出图片
-  const imgData = canvas.toDataURL('image/jpeg');
-  const link = document.createElement('a');
-  link.href = imgData;
-  link.download = 'poster.jpg';
-  link.click();
-}
+    const cropping = (event) => {
+      if (!isCropping.value) return;
+      endX.value = event.offsetX;
+      endY.value = event.offsetY;
+
+      const x = Math.min(startX.value, endX.value);
+      const y = Math.min(startY.value, endY.value);
+      const width = Math.abs(startX.value - endX.value);
+      const height = Math.abs(startY.value - endY.value);
+
+      ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
+      ctx.value.drawImage(img.value, 0, 0);
+      ctx.value.strokeStyle = 'red';
+      ctx.value.strokeRect(x, y, width, height);
+    };
+
+    const endCrop = () => {
+      isCropping.value = false;
+    };
+
+    const crop = () => {
+      if (!img.value) return;
+      const x = Math.min(startX.value, endX.value);
+      const y = Math.min(startY.value, endY.value);
+      const width = Math.abs(startX.value - endX.value);
+      const height = Math.abs(startY.value - endY.value);
+
+      ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
+      ctx.value.drawImage(img.value, x, y, width, height, 0, 0, width, height);
+    };
+
+    const reset = () => {
+      ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
+      img.value = null;
+    };
+
+    return { loadImage, startCrop, cropping, endCrop, crop, reset, img, canvas };
+  }
+};
 </script>
-
-<style lang="scss" scoped></style>
