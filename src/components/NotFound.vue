@@ -19,6 +19,8 @@ const store = useStore();
 
 const checked = ref<boolean>(false);
 const instance = getCurrentInstance();
+console.log(instance,'getCurrentInstance');
+
 if (instance != null) {
     const _this = instance.appContext.config.globalProperties; //vue3获取当前this
 

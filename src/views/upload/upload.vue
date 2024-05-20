@@ -20,7 +20,7 @@
       20人份/盒20人份/盒20人份/盒20 20人份/盒20人份/盒20人份/盒20
     </p>
   </div>
-  
+  <a-input v-focus v-model:value="value"></a-input>
   <a-button @click="handleClick" type="primary"> 修改 </a-button>
   <button class="color">nihaoa</button>
   <input type="">
@@ -31,13 +31,14 @@ import { message } from 'ant-design-vue';
 import { defineComponent, ref } from 'vue';
 // import 'vue-cropper/dist/index.css'
 // import { VueCropper } from 'vue-cropper'
-if (navigator.clipboard) {
-  navigator.clipboard.readText()
-    .then(text => console.log(text, 'text'))
-    .catch(error => console.log('获取剪贴板内容失败：', error));
-} else {
-  console.log('当前浏览器不支持Clipboard API');
-}
+// if (navigator.clipboard) {
+//   navigator.clipboard.readText()
+//     .then(text => console.log(text, 'text'))
+//     .catch(error => console.log('获取剪贴板内容失败：', error));
+// } else {
+//   console.log('当前浏览器不支持Clipboard API');
+// }
+const value = ref('')
 interface FileItem {
   uid: string;
   name?: string;
@@ -64,7 +65,7 @@ const handleClick = () => {
   if (isEdit.value) {
     t_color.value = 'red'
     b_color.value = '#eee'
-  }else{
+  } else {
     t_color.value = '#f60'
     b_color.value = '#000'
   }
