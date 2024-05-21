@@ -24,6 +24,7 @@
     "lottie-web": "^5.10.2",
     "md-editor-v3": "^2.7.2",
     "mitt": "^3.0.0",
+    "mockjs": "^1.1.0",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.23",
     "pinia-plugin-persist": "^1.0.0",
