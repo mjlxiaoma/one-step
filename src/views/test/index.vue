@@ -1,20 +1,20 @@
-
 <template>
   <m-antd-select-table ref="tantdselecttable" selectWidth="40%" v-model="state.selectVal" :table="state.table"
     :columns="state.table.columns" :scroll="{ x: 1000, y: 400 }" :keywords="{ label: 'name', value: 'code' }"
     @checked-change="checkedChange" placeholder="单选"></m-antd-select-table>
   <br>
-  <a-input v-model:value="inp" @change="changeInpVal" style="width: 200px;" />
-  输入框值{{ inp }}
-  <div class="box" style="width: 200px;height: 200px;background-color: #f60;opacity: 1;">父盒子
-    <div class="child" style="width: 100px;height: 100px;background-color: skyblue;opacity: 0.3;">子盒子</div>
-  </div>
-  <a href="tel:13116886815">点击拨打 13116886815</a>
+  <myComponent :foo="'123'" :bar="0">
+    <div>
+      <a-button type="primary" danger>我是slot的按钮</a-button>
+    </div>
+  </myComponent>
+  <MovingBox />
 </template>
 <script setup lang="ts">
 import MAntdSelectTable from "@/components/MAntdSelectTable/index.vue";
+import myComponent from '@/components/myComponent.vue';
+import MovingBox from '@/components/MovingBox.vue';
 import { reactive, ref } from "vue";
-const inp = ref()
 const tantdselecttable: any = ref<HTMLElement | null>(null);
 const state: any = reactive({
 

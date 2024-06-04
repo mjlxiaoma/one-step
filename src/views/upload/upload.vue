@@ -24,11 +24,14 @@
   <a-button @click="handleClick" type="primary"> 修改 </a-button>
   <button class="color">nihaoa</button>
   <input type="">
-</template> 
+</template>
 <script lang="ts" setup>
 import { InboxOutlined } from '@ant-design/icons-vue';
 import { message } from 'ant-design-vue';
 import { defineComponent, ref } from 'vue';
+import { addFun } from 'mjlpackge'
+console.log(addFun);
+
 // import 'vue-cropper/dist/index.css'
 // import { VueCropper } from 'vue-cropper'
 // if (navigator.clipboard) {
