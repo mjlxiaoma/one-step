@@ -1,65 +1,51 @@
 <template>
   <div class="upload">
-    <a-upload-dragger v-model:fileList="fileList" name="file" :multiple="true"
-      action="https://www.mocky.io/v2/5cc8019d300000980a055e76" @change="handleChange">
-      <p class="ant-upload-drag-icon">
-        <inbox-outlined></inbox-outlined>
-      </p>
-    </a-upload-dragger>
-    <!-- <div style="font-size: 12px; transform: scale(0.5);width: 50%;height: 50%;">
-      20人份/盒20人份/盒20人份/盒20人份/盒20人份/盒20人份/盒20人/盒20人份/盒</div>1312312312312312312-->
-    <!-- 文本容器 -->
-
-    <!-- <div class="container" style="width: 100px;">
-      20人份/盒20人份/盒20人份/盒20 20人份/盒20人份/盒20人份/盒20
-    </div> -->
   </div>
-  <div class="container1">
-    <!-- 文本内容 -->
-    <p>
-      20人份/盒20人份/盒20人份/盒20 20人份/盒20人份/盒20人份/盒20
-    </p>
+  <div id="video" style="display: flex;">
+    <a-upload :before-upload="handleVideoUpload" accept="video/*" show-upload-list="false">
+      <a-button icon="upload">上传视频</a-button>
+    </a-upload>
+    <video ref="video" controls @loadedmetadata="onVideoLoaded"
+      style="display: block; margin-top: 20px;width: 500px;height: 300px;"></video>
+    <a-button @click="captureFrame" style="margin-top: 20px;">选择当前帧作为封面图</a-button>
+    <div v-if="thumbnail" style="margin-top: 20px;">
+      <h3>封面图预览：</h3>
+      <img :src="thumbnail" alt="封面图预览" style="width: 500px;height: 300px;">
+    </div>
   </div>
-  <a-input v-focus v-model:value="value"></a-input>
   <a-button @click="handleClick" type="primary"> 修改 </a-button>
   <button class="color">nihaoa</button>
   <input type="">
 </template>
 <script lang="ts" setup>
-import { InboxOutlined } from '@ant-design/icons-vue';
-import { message } from 'ant-design-vue';
-import { defineComponent, ref } from 'vue';
+import { ref } from 'vue';
 import { addFun } from 'mjlpackge'
 console.log(addFun);
+const video = ref(null);
+const thumbnail = ref('');
+const handleVideoUpload = (file) => {
+  const url = URL.createObjectURL(file);
+  video.value.src = url;
+  return false; // 阻止默认的上传行为
+};
 
-// import 'vue-cropper/dist/index.css'
-// import { VueCropper } from 'vue-cropper'
-// if (navigator.clipboard) {
-//   navigator.clipboard.readText()
-//     .then(text => console.log(text, 'text'))
-//     .catch(error => console.log('获取剪贴板内容失败：', error));
-// } else {
-//   console.log('当前浏览器不支持Clipboard API');
-// }
-const value = ref('')
-interface FileItem {
-  uid: string;
-  name?: string;
-  status?: string;
-  response?: string;
-  url?: string;
-}
+const onVideoLoaded = () => {
+  video.value.currentTime = 1; // 跳到视频的1秒处
+};
 
-interface FileInfo {
-  file: FileItem;
-  fileList: FileItem[];
-}
+const captureFrame = () => {
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  canvas.width = video.value.videoWidth;
+  canvas.height = video.value.videoHeight;
+  console.log(video.value, 'video.value');
 
-// export default defineComponent({
-//   components: {
-//     InboxOutlined,
-//   },
-//   setup() {
+  context.drawImage(video.value, 0, 0, canvas.width, canvas.height);
+  thumbnail.value = canvas.toDataURL('image/png');
+  console.log(thumbnail.value, ' thumbnail.value');
+
+};
+
 let t_color = ref('#f60')
 let b_color = ref('#000')
 const isEdit = ref(false)
@@ -75,28 +61,6 @@ const handleClick = () => {
 
   console.log('点击了', t_color, b_color);
 }
-const handleChange = (info: FileInfo) => {
-  console.log(info, 'info');
-
-  const status = info.file.status;
-  if (status !== 'uploading') {
-    console.log(info.file, info.fileList);
-  }
-  if (status === 'done') {
-    message.success(`${info.file.name} file uploaded successfully.`);
-  } else if (status === 'error') {
-    message.error(`${info.file.name} file upload failed.`);
-  }
-};
-//     return {
-//       handleChange,
-//       fileList: ref([]),
-//       handleClick,
-//       t_color,
-//       b_color
-//     };
-//   },
-// });
 </script>
 <style lang="scss" scoped>
 .upload {
