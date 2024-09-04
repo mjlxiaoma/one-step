@@ -340,7 +340,7 @@ const parentRowSelection = {
     // 将改变的父Table下的子Table下的key都添加到setChildArr中
     console.log(selectedRows, 'selectedRows');
 
-    let setChildArr = <any>[]
+    let setChildArr = []
     changeRows.forEach(e => {
       setChildArr = [...setChildArr, ...e.child.map(item => item.key)]
     })
@@ -357,7 +357,7 @@ const parentRowSelection = {
   }
 }
 const checkAllSelected = () => {
-  const allChildKey = <any>[]
+  const allChildKey =[]
   data.forEach(item => {
     allChildKey.push(...item.child.map(i => i.key))
   })

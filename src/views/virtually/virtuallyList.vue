@@ -40,10 +40,12 @@ function dragenter(e, index) {
   }
 }
 function dragover(e) {
-  e.preventDefault()
-  e.dataTransfer.dropEffect = 'move'
+  // e.preventDefault()
+  // e.dataTransfer.dropEffect = 'move'
 }
 function dragend(e) {
+  console.log(e,'e');
+  
   e.target.classList.remove('moveing')
 }
 </script>

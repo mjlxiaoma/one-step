@@ -2,7 +2,7 @@
   <div class="upload">
   </div>
   <div id="video" style="display: flex;">
-    <a-upload :before-upload="handleVideoUpload" accept="video/*" show-upload-list="false">
+    <a-upload :before-upload="handleVideoUpload" accept="video/*" :show-upload-list="false">
       <a-button icon="upload">上传视频</a-button>
     </a-upload>
     <video ref="video" controls @loadedmetadata="onVideoLoaded"
