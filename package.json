@@ -31,6 +31,8 @@
     "pinia-plugin-persist": "^1.0.0",
     "postcss": "^8.4.21",
     "rollup-plugin-visualizer": "^5.9.0",
+    "rrweb": "^2.0.0-alpha.4",
+    "rrweb-player": "^1.0.0-alpha.4",
     "run-svg": "^1.6.8",
     "unplugin-auto-import": "^0.16.6",
     "vite-plugin-svg-icons": "^2.0.1",

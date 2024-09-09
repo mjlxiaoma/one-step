@@ -115,6 +115,17 @@ const routes: Array<RouteRecordRaw> = [
                     icon: 'icontable',
                 },
             },
+            {
+                path: '/rrweb',
+                name: 'rrweb',
+                component: () => import('../views/rrweb/index.vue'),
+                meta: {
+                    title: 'rrweb',
+                    hidden: false,
+                    toOne: false,
+                    icon: 'icontable',
+                },
+            },
         ],
     },
     {
