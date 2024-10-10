@@ -40,7 +40,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
-import { useRecord } from './use-records.ts';
+import { useRecord } from './use-records';
 import 'rrweb-player/dist/style.css';
 
 const { replayer, showReplay, onRecord, onReplay, goBack } = useRecord();
