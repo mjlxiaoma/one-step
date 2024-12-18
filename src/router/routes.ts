@@ -233,6 +233,17 @@ const routes: Array<RouteRecordRaw> = [
                     icon: 'iconpie-chart_sharp',
                 },
             },
+            {
+                path: '/editor',
+                name: 'editor',
+                component: () => import('../views/virtually/editor.vue'),
+                meta: {
+                    title: 'editor',
+                    hidden: false,
+                    toOne: false,
+                    icon: 'iconpie-chart_sharp',
+                },
+            },
         ],
     },
 ];
