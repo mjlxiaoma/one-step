@@ -39,13 +39,15 @@ function dragenter(e, index) {
     dragIndex = index
   }
 }
+//dragover事件在可拖动的元素或者被选择的文本被拖进一个有效的放置目标时（每隔几十秒）触发
 function dragover(e) {
+  console.log(e,'e')
   // e.preventDefault()
   // e.dataTransfer.dropEffect = 'move'
 }
+//dragend事件在拖放操作结束时触发（通过释放鼠标按钮或单击退出键）
 function dragend(e) {
   console.log(e,'e');
-  
   e.target.classList.remove('moveing')
 }
 </script>
