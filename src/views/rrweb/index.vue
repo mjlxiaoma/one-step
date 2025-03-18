@@ -1,75 +1,84 @@
 <template>
-  <main>
-    <header>
-      <a-button @click="onRecord" type="primary">录制</a-button>
-      <a-button @click="onReplay" type="success">回放</a-button>
-      <a-button @click="goBack">清空</a-button>
-    </header>
-    <!-- 展示回放的DOM -->
-    <section v-if="showReplay" ref="replayer"></section>
-    <!-- 表单 -->
-    <section v-else>
-      <a-form
-        ref="ruleFormRef"
-        style="max-width: 600px"
-        :model="ruleForm"
-        status-icon
-        label-width="auto"
-      >
-        <a-form-item label="用户名">
-          <a-input v-model="ruleForm.name" autocomplete="off" />
-        </a-form-item>
-        <a-form-item label="密码">
-          <a-input
-            v-model="ruleForm.pass"
-            type="password"
-            autocomplete="off"
-          />
-        </a-form-item>
-        <a-form-item label="年龄">
-          <el-input v-model.number="ruleForm.age" />
-        </a-form-item>
-        <a-form-item style="margin-left: 55px">
-          <a-button type="primary"> 提交 </a-button>
-          <a-button>重置</a-button>
-        </a-form-item>
-      </a-form>
-    </section>
-  </main>
+  <a-layout>
+    <a-layout-header>
+      <a-button @click="startRecording" type="primary" :disabled="isRecording">开始录制</a-button>
+      <a-button @click="stopRecording" type="default" v-if="isRecording">停止录制</a-button>
+      <a-button @click="playRecording" v-if="events.length">播放录制</a-button>
+    </a-layout-header>
+
+    <a-layout-content style="padding: 20px;">
+      <div class="form-container">
+        <h2>表单操作示例</h2>
+        <a-form @submit.prevent="handleSubmit">
+          <a-form-item label="姓名">
+            <a-input v-model="formData.name" placeholder="请输入姓名" />
+          </a-form-item>
+          <a-form-item label="邮箱">
+            <a-input v-model="formData.email" placeholder="请输入邮箱" />
+          </a-form-item>
+          <a-form-item label="消息">
+            <a-textarea v-model="formData.message" placeholder="请输入消息" />
+          </a-form-item>
+          <a-form-item>
+            <a-button type="primary" html-type="submit">提交</a-button>
+          </a-form-item>
+        </a-form>
+      </div>
+
+      <div ref="replayer" class="replay-container" v-if="showReplay"></div>
+    </a-layout-content>
+  </a-layout>
+  <Chirld :name="name" />
+  <div ref="div">1231</div>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
 import { useRecord } from './use-records';
-import 'rrweb-player/dist/style.css';
-
-const { replayer, showReplay, onRecord, onReplay, goBack } = useRecord();
-
-const ruleFormRef = ref();
-const ruleForm = reactive({
-  pass: '',
-  name: '',
-  age: '',
+import Chirld from './components/Chirld.vue';
+const { replayer, showReplay, onRecord, onReplay, goBack, isRecording, events } = useRecord();
+const div = ref();
+console.log(div.value, 'div.value');
+console.log(window.innerWidth, 'window.innerWidth');
+onBeforeMount(() => {
+  console.log(div.value, 'div.value');
 });
+const name = ref('我是父组件传递的数据：我的名字叫哈哈哈');
+const formData = ref({
+  name: '',
+  email: '',
+  message: '',
+});
+
+const startRecording = () => {
+  onRecord();
+};
+
+const stopRecording = () => {
+  goBack();
+};
+
+const playRecording = () => {
+  console.log('播放录制，事件列表:', events);
+  onReplay();
+};
+
+const handleSubmit = () => {
+  console.log('表单提交:', formData.value);
+  // 这里可以添加表单提交的逻辑
+};
 </script>
 
-<style scoped lang="scss">
-main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  margin-top: 50px;
-  header {
-    margin-bottom: 20px;
-  }
-  section {
-    border: 1px solid rgb(198, 194, 194);
-    padding: 20px;
-    border-radius: 4px;
-  }
+<style scoped>
+.form-container {
+  margin: 20px 0;
+}
+
+.replay-container {
+  width: 800px;
+  height: 450px;
+  border: 1px solid #ccc;
+  margin: 20px auto;
+  background: #f5f5f5;
 }
 </style>
-
