@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <a-select
     ref="selectRef"
     v-model:value="childSelectedValue"
@@ -114,7 +114,8 @@ const props = defineProps({
   },
   // 设置默认选中项--keywords.value值（单选是String, Number类型；多选时是数组）
   defaultSelectVal: {
-    type: Array as unknown as any[]
+    type: Array as unknown as any[],
+    default: () => [] // 确保默认值是一个空数组
   }
 });
 
@@ -156,10 +157,13 @@ watch(
 watch(
   () => props.defaultSelectVal,
   val => {
-    // console.log("defaultSelectValue--watch", val);
-    state.defaultSelectValue = val;
-    if (val && isDefaultSelectVal.value) {
-      defaultSelect(val);
+    if (Array.isArray(val)) {
+      state.defaultSelectValue = val;
+      if (isDefaultSelectVal.value) {
+        defaultSelect(val);
+      }
+    } else {
+      console.error("defaultSelectVal 必须是一个数组");
     }
   },
   { deep: true }
@@ -351,13 +355,13 @@ const filterMethodHandle = (input: string) => {
     }
   }, 0);
 };
-// 表格显示隐藏回调
+// 表格显示隐藏��调
 const visibleChange = (visible: boolean) => {
   // console.log("表格显示隐藏回调", visible);
   open.value = visible;
   if (visible) {
     if (props.defaultSelectVal && isDefaultSelectVal.value) {
-      defaultSelect(props.defaultSelectVal);
+      defaultSelect(props.defaultSelectVal as any);
     }
   } else {
     // findLabel();
@@ -442,4 +446,4 @@ defineExpose({ focus, blur, openSelectDropdown, state });
     flex-wrap: nowrap;
   }
 }
-</style> -->
+</style>

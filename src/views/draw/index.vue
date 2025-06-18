@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="container">
     <div v-for="(item, index) in DrawList" :key="index" class="prize-item" :class="currentIndex === index ? 'active' : ''"
       @click="() => draw(index)">
@@ -90,4 +90,34 @@ const draw = (index: number) => {
     background-color: rgb(214, 83, 83);
   }
 }
-</style>
+</style> -->
+<template>
+  <!-- <div style="display: flex; overflow-x: auto;">
+    <div style="width: 2000px; min-width: 1000px; height: 500px; background-color: skyblue; flex-shrink: 0;">
+
+    </div>
+    <div style="width: 100%; height: 500px; background-color: #f60; ">
+      <div style="display: flex; width: 100%; height: 100%;">
+        <div style="width: 200px; height: 100%; background-color: #f60;"></div>
+        <div style="flex: 1; background-color: skyblue; min-width: 600px;"></div>
+        <div style="width: 200px; height: 100%; background-color: #f60;"></div>
+      </div>
+    </div>
+
+  </div> -->
+  <div style="display: flex;flex-wrap: wrap;align-content: center;flex-direction: column;">
+    <div style="width: 100px;height: 100px;background-color: skyblue;">1</div>
+    <div style="width: 100px;height: 100px;background-color: salmon;">2</div>
+    <div style="width: 100px;height: 100px;background-color: antiquewhite;">3</div>
+    <div style="width: 100px;height: 100px;background-color: c;">4</div>
+  </div>
+</template>
+<script setup lang="ts">
+
+
+
+
+
+
+</script>
+<style lang="scss" scoped></style>

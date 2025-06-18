@@ -74,9 +74,9 @@ export const useRecord = () => {
 
     // 返回
     const goBack = () => {
-        if (stopFn.value) {
-            stopFn.value();
-            stopFn.value = null;
+        if (stopFn) {
+            stopFn();
+            stopFn = null;
         }
 
         // 清理播放器DOM

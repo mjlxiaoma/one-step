@@ -1,354 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
-
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-    }
-
-    #triangle {
-      width: 0;
-      border-top: 100px solid rgba(0, 0, 0, 0);
-      border-bottom: 100px solid rgba(0, 0, 0, 0);
-      border-left: 100px solid green;
-      border-right: 100px solid rgba(0, 0, 0, 0);
-      border-radius: 100px;
-    }
-
-    #triangle1 {
-      width: 0;
-      border-top: 100px solid rgba(0, 0, 0, 0);
-      border-bottom: 100px solid rgba(0, 0, 0, 0);
-      border-left: 100px solid rgba(0, 0, 0, 0);
-      border-right: 100px solid blue;
-    }
-
-    /* 动画 */
-    .polling_message {
-      color: white;
-      float: left;
-      margin-right: 2%;
-    }
-
-    .view_port {
-      background-color: black;
-      height: 25px;
-      width: 100%;
-      overflow: hidden;
-    }
-
-    .cylon_eye {
-      background-color: red;
-      background-image: linear-gradient(to right,
-          rgba(0, 0, 0, 0.9) 25%,
-          rgba(0, 0, 0, 0.1) 50%,
-          rgba(0, 0, 0, 0.9) 75%);
-      /* color: white; */
-      height: 100%;
-      width: 20%;
-
-      -webkit-animation: 4s linear 0s infinite alternate move_eye;
-      animation: 4s linear 0s infinite alternate move_eye;
-    }
-
-    @-webkit-keyframes move_eye {
-      from {
-        margin-left: -20%;
-      }
-
-      to {
-        margin-left: 100%;
-      }
-    }
-
-    @keyframes move_eye {
-      from {
-        margin-left: -20%;
-      }
-
-      to {
-        margin-left: 100%;
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <!-- <div style="display: flex; width: 100%;height: 100%; flex-direction: column; text-align: center;">
-    <div style="height: 50px; background-color: antiquewhite;">top</div>
-    <div style="background-color: aqua; flex: 1;">center</div>
-    <div style="height: 50px; background-color: #f60;">bottom</div>
-  </div> -->
-  <div style="display: flex;">
-    <div class="left" style="border:1px solid #f60">
-      <span>你好啊</span>
-    </div>
-  </div>
-  <div class="view_port">
-    <div class="polling_message">Listening for dispatches</div>
-    <div class="cylon_eye"></div>
-  </div>
-  <a download="xiazai"
-    href="https://vdept3.bdstatic.com/mda-pgpcpwjzkij42dqf/720p/h264/1690189318974159156/mda-pgpcpwjzkij42dqf.mp4?v_from_s=hkapp-haokan-hnb&auth_key=1710393961-0-0-63ca61ea6357c1e7d6c5d96bcbd3baf3&bcevod_channel=searchbox_feed&pd=1&cr=2&cd=0&pt=3&logid=1561285869&vid=15373639849206649643&klogid=1561285869&abtest=">下载</a>
-  <script>
-    // 对象创建的方式有哪些
-    // 字面量
-    // 工厂模式
-    // 构造函数模式
-    // 原型模式
-    // 组合使用构造函数模式和原型模式
-    // 动态原型模式
-    // 寄生构造函数模式
-    // 单例模式
-    // const func = () => {
-    //   return new Promise((resolve, reject) => {
-    //     setTimeout(() => {
-    //       resolve(1)
-    //     }, 1000)
-    //   })
-    // }
-    // const fn = async () => {
-    //   const res = await func()
-    //   console.log(res);
-    // }
-    // fn()
-    //手写Object Create
-    // function myCreate(obj) {
-    //   function F() { }
-    //   F.prototype = obj
-    //   return new F()
-    // }
-    // 手写深拷贝
-    // function deepClone(obj) {
-    //   if (typeof obj !== "object") return
-    //   let newObj = Array.isArray(obj) ? [] : {}
-    //   for (let key in obj) {
-    //     if (obj.hasOwnProperty(key)) {
-    //       // 如果是对象继续递归调用
-    //       newObj[key] = typeof obj[key] === 'object' ? deepClone(obj[key]) : obj[key]
-    //     }
-    //   }
-    //   return newObj
-    // }
-    // const obj = {
-    //   name: '孙悟空',
-    //   age: 20,
-    // }
-    // const obj2 = deepClone(obj)
-    // console.log(obj2, 'obj1');
-    // console.log(obj2, 'obj2');
-    // obj.name = '唐僧'
-    // obj2.name = '白骨精'
-    // console.log(obj, 'obj');
-    // console.log(obj2, 'obj2');
-    class MyPromise {
-      constructor(executor) {
-        console.log(executor, 'executor');
-        this.status = 'pending';
-        this.value = undefined;
-        this.reason = undefined;
-        this.onFulfilledCallbacks = [];
-        this.onRejectedCallbacks = [];
-
-        const resolve = (value) => {
-          if (this.status === 'pending') {
-            this.status = 'fulfilled';
-            this.value = value;
-            this.onFulfilledCallbacks.forEach(callback => callback(value));
-          }
-        };
-
-        const reject = (reason) => {
-          if (this.status === 'pending') {
-            this.status = 'rejected';
-            this.reason = reason;
-            this.onRejectedCallbacks.forEach(callback => callback(reason));
-          }
-        };
-
-        try {
-          executor(resolve, reject);
-        } catch (error) {
-          reject(error);
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
         }
-      }
-
-      then(onFulfilled, onRejected) {
-        return new MyPromise((resolve, reject) => {
-          if (this.status === 'fulfilled') {
-            setTimeout(() => {
-              try {
-                const result = onFulfilled(this.value);
-                resolve(result);
-              } catch (error) {
-                reject(error);
-              }
-            }, 0);
-          }
-
-          if (this.status === 'rejected') {
-            setTimeout(() => {
-              try {
-                const result = onRejected(this.reason);
-                resolve(result);
-              } catch (error) {
-                reject(error);
-              }
-            }, 0);
-          }
-
-          if (this.status === 'pending') {
-            this.onFulfilledCallbacks.push((value) => {
-              setTimeout(() => {
-                try {
-                  const result = onFulfilled(value);
-                  resolve(result);
-                } catch (error) {
-                  reject(error);
-                }
-              }, 0);
-            });
-
-            this.onRejectedCallbacks.push((reason) => {
-              setTimeout(() => {
-                try {
-                  const result = onRejected(reason);
-                  resolve(result);
-                } catch (error) {
-                  reject(error);
-                }
-              }, 0);
-            });
-          }
-        });
-      }
-
-      catch(onRejected) {
-        return this.then(null, onRejected);
-      }
-    }
-
-    // 示例
-
-    const promise1 = new MyPromise((resolve, reject) => {
-      // 异步操作，比如 AJAX 请求
-      setTimeout(() => {
-        // resolve('Data successfully retrieved!');
-      }, 1000);
-    });
-
-    promise1.then((data) => {
-      console.log(data); // 输出 'Data successfully retrieved!'
-    }).catch((error) => {
-      console.error(error);
-    });
-    const p = new Promise((resolve, reject) => {
-      resolve(1231)
-    })
-    p.then((res => {
-      console.log(res, 'res');
-    }))
-
-    //防抖函数
-    function debounce(func, delay) {
-      let timer;
-      return function (...args) {
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-          func.apply(this, args);
-        }, delay);
-      };
-    }
-
-    // 示例
-    const debouncedFunction = debounce(() => {
-      // console.log("Debounced function is called.");
-    }, 300);
-    function throttle(func, delay) {
-      let isThrottled = false;
-      return function (...args) {
-        if (!isThrottled) {
-          func.apply(this, args);
-          isThrottled = true;
-          setTimeout(() => {
-            isThrottled = false;
-          }, delay);
+        html,
+        body {
+            width: 100%;
+            height: 100%;
         }
-      };
-    }
+    </style>
+    <body>
+        <div style="width: 100%; height: 100%; display: flex; flex-direction: column">
+            <div style="height: 50px; background-color: #f60">上</div>
+            <div style="flex: 1; background-color: skyblue; overflow: scroll">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, libero veritatis quo illo alias cupiditate dolore. Omnis nemo nisi nobis quo sequi illum, voluptatem ea dolorem culpa dicta ipsa
+                corrupti? Adipisci libero accusamus, assumenda aut dolorem sed repudiandae voluptate saepe, modi eligendi ipsa officia non harum, fuga dignissimos inventore iusto? Fugit officia fugiat aperiam corporis
+                et, nemo magni ipsa assumenda. Debitis nesciunt optio accusamus excepturi cumque nobis harum non rerum ex ratione nostrum consequatur fugit, aliquid omnis vel impedit asperiores modi incidunt doloremque,
+                ad obcaecati provident, ipsa porro placeat. Quibusdam. Sunt fugit est molestiae unde harum reprehenderit, sequi itaque. Dolorum, officiis maxime itaque odio voluptas saepe pariatur eveniet ipsa! Velit
+                beatae porro alias ex animi saepe quisquam eligendi perferendis voluptatem! Placeat maxime ullam assumenda fuga aspernatur. Impedit nam fugit natus corporis aperiam. Magnam, nulla delectus. Dolorum
+                officia tempora provident magni corrupti, voluptas rerum ducimus tenetur architecto. Rerum repellendus alias at? In, consequuntur a fugiat repudiandae, illo laborum non numquam ut ad recusandae veritatis
+                esse saepe laboriosam ipsa beatae, expedita nihil! Doloribus a tempore maxime autem consectetur? Consequatur, illum. Consequatur, deserunt! Ducimus natus architecto illum quam magni, animi iure fuga
+                suscipit? Voluptatibus ad quae commodi hic, doloremque rem, dolorem in nihil quisquam sapiente sed atque et, eos ipsa reiciendis adipisci amet. Tempore architecto eveniet quasi doloremque harum eius
+                autem, optio necessitatibus! Numquam quae enim cumque deleniti, beatae neque doloribus dicta voluptatum quaerat vitae velit? Veniam amet ea iste aspernatur blanditiis in. Repellat consequatur qui
+                laboriosam saepe recusandae! Mollitia sint enim, repudiandae voluptatibus corporis quibusdam exercitationem similique quia vero aut alias tempora, animi excepturi unde aspernatur dicta. Veniam dolorem
+                odio dolorum saepe! Ad quae at quo assumenda expedita? Dicta laborum beatae iste doloremque fugit culpa cumque vel voluptatibus ex recusandae aperiam possimus qui, dolores soluta laudantium dolorem
+                facilis nostrum ab labore quidem. Praesentium, totam nemo magnam animi assumenda tenetur illum. Mollitia doloremque dignissimos iste dolore necessitatibus similique ipsum beatae perferendis, enim fugit
+                aut, hic magni laborum at tempore ratione officia dolorum! Delectus! Voluptatibus dolorum eveniet deserunt numquam accusantium aliquid soluta, error quaerat sapiente quidem consectetur aliquam fugiat amet
+                fugit sunt nesciunt, vitae omnis nisi voluptatem non obcaecati quia. Aspernatur ea delectus aliquid. Reprehenderit accusamus libero exercitationem, fugiat distinctio maiores voluptas, id magni, doloribus
+                quasi architecto consequuntur assumenda. Accusamus nemo illo explicabo. Saepe consectetur possimus doloremque vero corrupti ratione ipsam quia facilis maxime? Pariatur tempora esse quia natus
+                exercitationem earum itaque harum, quibusdam repellat! Ad soluta ex neque recusandae, voluptates itaque voluptatem voluptas reprehenderit quia velit beatae aliquid eveniet numquam tempora debitis
+                laudantium! Optio ex amet, enim assumenda quibusdam aliquid illum non debitis consequuntur deleniti vero repellendus quod nobis dolorum earum laboriosam corporis reiciendis excepturi repellat inventore
+                nisi omnis veniam. Delectus, molestiae cum? Officiis, obcaecati perspiciatis. Enim modi tenetur eum tempora quibusdam eos culpa minus, esse dicta assumenda! Nostrum eius similique molestias, ipsum itaque
+                consequatur a ad eveniet accusantium minus earum optio deleniti. Animi fugit inventore quas? Obcaecati vel blanditiis libero totam pariatur exercitationem praesentium a laboriosam possimus, earum, velit
+                laborum. Nostrum eligendi officiis tempora consectetur, excepturi autem suscipit omnis quas magnam exercitationem. Necessitatibus ullam modi illo molestias, magnam aperiam veritatis eligendi fugiat,
+                voluptatibus iusto minus facilis recusandae minima sint excepturi. Distinctio debitis mollitia aliquid quidem iure consectetur asperiores nemo sunt sint aperiam. Voluptatem, quisquam. Magni magnam amet
+                eius veritatis repellat reprehenderit labore expedita, fugit asperiores tenetur ad error id, totam tempora quasi eligendi rerum accusantium quidem quaerat! Doloremque molestiae consectetur laudantium!
+                Culpa. Deleniti ex in eligendi consectetur repellat fugit rerum quasi itaque totam, adipisci quidem! Aliquid ipsum modi dicta optio eligendi eius consectetur quis incidunt dolor ipsa cum nostrum, porro,
+                odit nobis? Nisi eaque saepe repellat at vel, tempora quisquam nostrum consectetur officiis. Quas, dolor quibusdam! Culpa ad omnis atque quaerat nemo, cum optio veritatis quia incidunt tenetur consectetur
+                accusamus, numquam ducimus? Deserunt voluptas consequuntur repudiandae maiores iusto voluptate magni voluptates, soluta fuga sint, maxime quae. Molestias illo qui eligendi beatae optio sit expedita
+                mollitia exercitationem, minus perferendis doloremque tenetur quae fuga! Tempore earum facilis, voluptatem, sunt saepe laborum iure est blanditiis ex unde deserunt maiores eum suscipit, excepturi minima
+                labore fugit! Facere, vitae doloribus? Cumque tempore natus dolores, labore aliquid repellat. Officia est possimus voluptatibus tempora autem! Repudiandae unde illum debitis adipisci. Repudiandae illum
+                facere ipsa fugiat minus architecto, similique cum nemo minima eligendi ducimus laborum reiciendis pariatur officiis praesentium asperiores! Aut sequi iure tempora cum voluptatum hic in repellat sapiente
+                minima id debitis voluptatem eveniet eos quidem mollitia soluta perspiciatis dolorem quas non, vitae ad suscipit saepe! Molestias, mollitia quo! Rem optio iste nulla incidunt fugiat nihil voluptatum
+                libero laudantium autem error quod repellendus, earum itaque minus et quidem similique saepe asperiores? Cupiditate tempore error corporis natus, recusandae quod ad. Dolor sequi consequatur nobis hic
+                autem in incidunt eum suscipit vitae ab exercitationem non perferendis numquam, eius odit unde deleniti adipisci dolorem totam! Cupiditate, dolore non praesentium modi at soluta. Ex aliquam porro eos ea,
+                fugiat quibusdam neque animi inventore repudiandae tempore odio quasi. Soluta eos eaque, consequatur autem cumque ut mollitia dolores rem quisquam iusto veritatis dignissimos doloribus explicabo.
+                Repellendus deleniti labore, tempora dolorum impedit earum ipsum a asperiores totam voluptatem facilis culpa placeat, dolorem repudiandae cupiditate. Totam incidunt iste nulla corporis possimus facere
+                unde. Laborum vero ipsum eaque! Ducimus, laboriosam impedit. Dolor minus laborum, sunt exercitationem nam, ad velit itaque, odio at porro voluptas quisquam. Repellat iusto, quis voluptates mollitia
+                reiciendis consequatur iste sapiente tempora non aut possimus? Magni doloribus, molestias amet nam atque quam vero enim molestiae quibusdam explicabo placeat dolor inventore minus nesciunt repudiandae
+                alias unde eveniet dolorem iusto eaque ducimus. Tempore voluptates placeat eligendi ipsa? Cupiditate voluptas obcaecati neque, porro, harum quasi dolore optio quas commodi unde ex exercitationem
+                praesentium, expedita quo! Molestiae ratione ab necessitatibus corrupti laboriosam, aut atque at qui, sed facere culpa. Inventore ipsa ullam, quod rem magni est obcaecati, enim esse ex in voluptates
+                labore magnam aut? Perferendis impedit molestiae dolor! Consectetur sequi velit dignissimos, molestiae aperiam aliquam harum facilis eligendi? Molestias, dolore in nisi veniam doloremque dicta aut alias
+                illum. Laboriosam aut tempora ad dolorum nam placeat. Porro suscipit consectetur voluptas maxime nam! Suscipit adipisci reprehenderit voluptate, perferendis maxime aspernatur? Velit ad totam nam eos,
+                error sunt earum dolor, dignissimos obcaecati, atque quaerat tenetur a. Quam, quidem suscipit minima ut itaque nemo minus quasi soluta expedita, doloribus, fuga aliquid sed. Sed, repudiandae animi!
+                Dolore, non illo. Rem, aut? Doloribus enim nam temporibus labore? Delectus veniam eveniet repudiandae natus dolor architecto tempore non assumenda facilis? Aliquam voluptatibus quidem accusamus ex
+                voluptates. Eum odit, ipsam iure delectus cupiditate, perspiciatis exercitationem amet quaerat culpa alias vel quod nihil atque hic explicabo eos iusto quae? Soluta fugiat, aspernatur qui quaerat quas
+                laborum hic necessitatibus! Iste temporibus et unde voluptatum dolore placeat, cum veniam laboriosam nisi aliquam dolorum aperiam obcaecati, aut incidunt, quisquam rerum. Animi iure facilis expedita fugit
+                autem rerum pariatur? Accusantium, iste et! Eaque deleniti porro maxime? Vel debitis sunt rerum dolores, quam nostrum doloremque impedit cumque expedita corporis cum natus architecto earum modi quo, fuga
+                vero deleniti? Impedit aspernatur tenetur distinctio nostrum. Recusandae aspernatur vero reiciendis deserunt eveniet architecto error et! Excepturi iure vel quas recusandae, eius doloremque necessitatibus
+                eum explicabo soluta, modi deserunt incidunt distinctio hic error? Voluptates sit architecto aspernatur? Nostrum a obcaecati doloremque dignissimos distinctio quaerat non cum deleniti deserunt! Officiis
+                quaerat fugit hic illo, fuga atque, enim quia laborum nisi provident animi obcaecati doloremque, exercitationem quibusdam veniam rem. Minus iure, quasi quia velit reiciendis voluptatum fugiat perspiciatis
+                dolore voluptate quae maiores minima, aut ipsa. Ex, reprehenderit voluptate sequi error consequatur itaque est quod neque iusto fuga nostrum debitis. Non aut nam ea accusantium debitis, labore reiciendis
+                temporibus odit corrupti assumenda eum repudiandae necessitatibus sequi commodi perspiciatis, impedit, veniam eligendi cum tenetur vero molestias reprehenderit tempore voluptatibus. Numquam, debitis?
+                Itaque dignissimos debitis obcaecati. Pariatur ratione culpa blanditiis consectetur eaque neque doloremque? Architecto, vitae vero reprehenderit suscipit commodi omnis voluptates ad dolore veniam rerum
+                repellendus quas totam incidunt dolor consectetur! Temporibus, sapiente dolores? Minima eligendi, corrupti numquam ducimus, necessitatibus voluptatibus esse quas obcaecati blanditiis provident iusto
+                voluptatem dolorem sint ipsa illum rem aut molestiae molestias similique! Est accusantium saepe labore. Maiores aut nam minus illo praesentium. Tenetur eveniet sapiente sunt quasi laborum earum dolorum
+                mollitia architecto facere omnis provident sed ipsam non corrupti, voluptates, nobis dolor odit? Corrupti, odit saepe! Reiciendis mollitia cum perspiciatis esse sunt fugit cumque qui blanditiis, ab
+                necessitatibus consectetur debitis in veritatis, culpa sapiente optio obcaecati doloremque unde laboriosam beatae delectus possimus repudiandae. Sunt, nisi aliquam? Aut enim pariatur assumenda nisi,
+                maxime minus sapiente odit repudiandae quia? Voluptas, esse. Dolores pariatur, exercitationem dignissimos inventore consequatur aspernatur modi unde odio obcaecati non. Animi autem dolorum dignissimos
+                consectetur. Sit facilis in cumque illo nihil sequi facere atque consectetur deserunt dolore, beatae, voluptate itaque obcaecati pariatur dolorum dicta, cupiditate fugiat optio quas! Suscipit perferendis
+                itaque officia sed dolore eos? Nulla architecto sequi consectetur qui eius quasi repudiandae. Doloremque nesciunt fugit atque quam quasi mollitia quod maxime quas odit numquam, cumque corporis veniam
+                suscipit quidem veritatis minima commodi! Aliquid, est!
+            </div>
+            <div style="height: 50px; background-color: #f60">下</div>
+        </div>
+        <script>
+            // (functions = [x => x + 1, x => x * x, x => 2 * x]), (x = 4);
+            // var compose = function (functions) {
+            //     return function (x) {
+            //         let len = functions.length;
+            //         let res = x;
+            //         for (let i = len - 1; i >= 0; i--) {
+            //             res = functions[i](res);
+            //         }
+            //         return res;
+            //     };
+            // };
+            // const fn = compose([x => x + 1, x => 2 * x]);
+            // fn(4); // 9
+            // const users = [
+            //     { name: 'Alice', age: 20 },
+            //     { name: 'Bob', age: 22 },
+            //     { name: 'Carol', age: 20 },
+            //     { name: 'David', age: 23 },
+            //     { name: 'Eve', age: 22 },
+            // ];
+            // const ageCount = users.reduce((acc, user) => {
+            //     const age = user.age;
+            //     acc[age] = (acc[age] || 0) + 1;
+            //     return acc;
+            // }, {});
+            // console.log(ageCount);
+            class EventBus {
+                constructor() {
+                    this.events = {};
+                }
 
-    function myInstanceof(left, right) {
-      // 获取对象的原型
-      let proto = Object.getPrototypeOf(left)
-      // 获取构造函数的 prototype 对象
-      let prototype = right.prototype;
+                // 订阅事件
+                on(event, callback) {
+                    console.log(event, 'event');
+                    console.log(this.events, 'this.events');
 
-      // 判断构造函数的 prototype 对象是否在对象的原型链上
-      while (true) {
-        if (!proto) return false;
-        if (proto === prototype) return true;
-        // 如果没有找到，就继续从其原型上找，Object.getPrototypeOf方法用来获取指定对象的原型
-        proto = Object.getPrototypeOf(proto);
-      }
-    }
-  </script>
-  <script>
-    // const obj = {}
-    // Object.prototype.fn = function () {
-    // }
-    // console.log(obj);
-    // console.log( obj.fn());
-    // // console.log(Object())
-    // let map = new Map([['a', 2], ['b', 3]])
-    // console.log(map.values(), 'map');
-    // let iS = map.delete('a')
-    // console.log(iS);
-    // console.log(map, 'map');
-    let o = {
-      name: '孙悟空',
-      age: 18,
-      sayName() {
-        console.log(this.name)
-      }
-    }
-    // function Fn(name) {
-    //   this.name = name
-    // }
-    // let fn = new Fn()
-    // console.log(Fn.prototype == fn.__proto__, 'Fn.prototype == fn.__proto__')
-    // console.log(Fn.prototype, 'Fn.prototype == fn.__proto__')
-    // console.log(fn.__proto__, 'Fn.prototype == fn.__proto__')
-    function Parent() {
-      this.name = 'Parent';
-    }
+                    if (!this.events[event]) {
+                        this.events[event] = new Set();
+                    }
+                    this.events[event].add(callback);
+                }
 
-    Parent.prototype.sayHello = function () {
-      console.log('Hello, ' + this.name);
-    };
+                // 触发事件
+                emit(event, ...args) {
+                    console.log(event, 'event----');
+                    console.log(args, 'args----');
+                    console.log(this.events, 'this.events-----');
+                    console.log(this.events[event],'this.events[event]----');
+                    
+                    if (this.events[event]) {
+                        for (const cb of this.events[event]) {
+                            cb(...args);
+                        }
+                    }
+                }
 
-    function Child() { }
+                // 取消订阅
+                off(event, callback) {
+                    if (this.events[event]) {
+                        this.events[event].delete(callback);
+                    }
+                }
 
-    Child.prototype = new Parent();
+                // 只触发一次
+                once(event, callback) {
+                    const wrapper = (...args) => {
+                        callback(...args);
+                        this.off(event, wrapper);
+                    };
+                    this.on(event, wrapper);
+                }
+            }
 
-    var child = new Child();
-    child.sayHello(); // 输出：Hello, Parent
-  </script>
-</body>
-<script>
-  import('./demo.js').then(res => {
-    console.log(res, 'res');
-  })
-</script>
+            const bus = new EventBus();
 
+            function greet(name) {
+                console.log(`Hello, ${name}`);
+            }
+
+            bus.on('sayHi', greet);
+            bus.emit('sayHi', '小马'); // 输出：Hello, 小马
+
+            bus.off('sayHi', greet);
+            bus.emit('sayHi', '小马12321'); // 无输出
+
+            // bus.once('onlyOnce', msg => console.log('触发一次:', msg));
+            // bus.emit('onlyOnce', '第一次'); // 输出：触发一次: 第一次
+            // bus.emit('onlyOnce', '第二次'); // 无输出
+            const a = new Set([{ a: 1 }, { a: 2 }, { a: 3 }, { a: 3 }, { a: 3 }, { a: 3 }]);
+            const b = new Map([
+                [1, 2],
+                [3, 4],
+                [5, 6],
+            ]);
+            for (const item of a) {
+                console.log(item, 'item');
+            }
+            for (const item of b) {
+                console.log(item, 'item');
+            }
+
+
+        </script>
+    </body>
 </html>
